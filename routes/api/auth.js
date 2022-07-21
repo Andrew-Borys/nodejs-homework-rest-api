@@ -7,6 +7,14 @@ const router = express.Router();
 
 // sigup
 router.post("/singup", validation(schemas.singup), ctrlWrapper(ctrl.singup));
+// verification
+router.get("./verify/:verificationToken", ctrlWrapper(ctrl.verifyEmail));
+
+router.post(
+  "/verify",
+  validation(schemas.email),
+  ctrlWrapper(ctrl.resendVerifyEmail)
+);
 // login
 router.post("/login", validation(schemas.login), ctrlWrapper(ctrl.login));
 
