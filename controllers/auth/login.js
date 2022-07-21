@@ -10,8 +10,12 @@ const login = async (req, res) => {
   if (!user) {
     throw createError(401, "Wrong email");
   }
+  if (!user.verify) {
+    throw createError(401, "Email not verified");
+  }
   // if need validate psw
-  if (!bcrypt.compare(password, user.password)) {
+  const compareResult = await bcrypt.compare(password, user.password);
+  if (!compareResult) {
     console.log(user.password);
     throw createError(401, "Wrong password");
   }
